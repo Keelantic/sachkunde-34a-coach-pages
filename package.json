@@ -1,0 +1,9 @@
+{
+  "name": "sachkunde-34a-coach-pages",
+  "private": true,
+  "scripts": {
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1",
+    "test": "node scripts/validate.mjs",
+    "check:publish": "node scripts/validate.mjs"
+  }
+}

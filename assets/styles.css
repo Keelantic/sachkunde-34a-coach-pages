@@ -1,0 +1,245 @@
+:root {
+  color-scheme: light dark;
+  --background: #f6f7f3;
+  --surface: #ffffff;
+  --surface-muted: #edf0e8;
+  --text: #161813;
+  --text-muted: #555b50;
+  --border: #d9ded2;
+  --brand: #184d3b;
+  --brand-strong: #0f3b2c;
+  --on-brand: #ffffff;
+  --warning: #7d4100;
+  --warning-background: #fff1d7;
+  --focus: #0b66d4;
+  --content-width: 48rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #10130f;
+    --surface: #191d18;
+    --surface-muted: #222820;
+    --text: #f4f6f0;
+    --text-muted: #bdc5b8;
+    --border: #394036;
+    --brand: #8dd4b4;
+    --brand-strong: #a9e5c9;
+    --on-brand: #0c241b;
+    --warning: #ffd395;
+    --warning-background: #402a0f;
+    --focus: #8cc7ff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  margin: 0;
+}
+
+a {
+  color: var(--brand);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--brand-strong);
+}
+
+a:focus-visible,
+button:focus-visible {
+  border-radius: 0.25rem;
+  outline: 0.2rem solid var(--focus);
+  outline-offset: 0.2rem;
+}
+
+.skip-link {
+  background: var(--surface);
+  left: 1rem;
+  padding: 0.75rem 1rem;
+  position: fixed;
+  top: -5rem;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.site-header,
+.site-footer,
+main {
+  margin-inline: auto;
+  max-width: var(--content-width);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.site-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  padding-block: 1.25rem;
+}
+
+.brand {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+nav ul,
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding-block: clamp(2rem, 6vw, 4rem);
+}
+
+h1,
+h2,
+h3 {
+  hyphens: auto;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 7vw, 3.5rem);
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 4vw, 1.8rem);
+  margin-block: 2.5rem 0.75rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin-block: 1.75rem 0.5rem;
+}
+
+p,
+li {
+  max-width: 72ch;
+}
+
+.lead {
+  color: var(--text-muted);
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  max-width: 58ch;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  margin-block: 2rem;
+}
+
+.card,
+.callout {
+  background: var(--surface);
+  border: 0.0625rem solid var(--border);
+  border-radius: 1rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.card h2 {
+  font-size: clamp(1.25rem, 3vw, 1.55rem);
+}
+
+.button {
+  background: var(--brand);
+  border-radius: 999px;
+  color: var(--on-brand);
+  display: inline-block;
+  font-weight: 700;
+  margin-block: 0.5rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.25rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--brand-strong);
+  color: var(--on-brand);
+}
+
+.warning {
+  background: var(--warning-background);
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.placeholder {
+  border-bottom: 0.15rem dashed currentColor;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.meta,
+.site-footer {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+
+.site-footer {
+  border-top: 0.0625rem solid var(--border);
+  padding-block: 1.5rem 3rem;
+}
+
+dt {
+  font-weight: 750;
+  margin-top: 1rem;
+}
+
+dd {
+  margin-inline-start: 0;
+}
+
+code {
+  background: var(--surface-muted);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.3rem;
+}
+
+@media (max-width: 34rem) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
