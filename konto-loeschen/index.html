@@ -28,12 +28,12 @@
       </nav>
     </header>
     <main id="inhalt">
-      <p class="meta">Stand: 26. August 2026</p>
+      <p class="meta">Stand: 4. Oktober 2026</p>
       <h1>Konto und Daten löschen</h1>
       <p class="lead">
-        Sie können Ihr Sachkunde-34a-Coach-Konto und die damit verknüpften Daten
-        direkt in der App löschen. Falls Sie keinen Zugriff mehr auf die App
-        haben, können Sie die Löschung hier extern anfordern.
+        Sie können Ihr Sachkunde-34a-Coach-Konto und die damit verknüpften Daten direkt in der App
+        löschen. Falls Sie keinen Zugriff mehr auf die App haben, können Sie die Löschung hier
+        extern anfordern.
       </p>
 
       <h2>Direkt in der App löschen</h2>
@@ -41,23 +41,19 @@
         <li>Öffnen Sie den Tab <strong>Profil</strong>.</li>
         <li>Scrollen Sie zum Bereich <strong>Konto und Daten</strong>.</li>
         <li>Wählen Sie <strong>Konto löschen</strong>.</li>
-        <li>
-          Lesen Sie den Hinweis und bestätigen Sie die endgültige Löschung.
-        </li>
+        <li>Lesen Sie den Hinweis und bestätigen Sie die endgültige Löschung.</li>
       </ol>
       <p>
-        Aus Sicherheitsgründen kann eine erneute Anmeldung erforderlich sein.
-        Die Löschung entfernt das Konto sowie den zugehörigen synchronisierten
-        schriftlichen und mündlichen Lernfortschritt und die nutzerbezogenen
-        KI-Nutzungsdaten.
+        Aus Sicherheitsgründen kann eine erneute Anmeldung erforderlich sein. Die Löschung entfernt
+        das Konto sowie den zugehörigen synchronisierten schriftlichen und mündlichen
+        Lernfortschritt und die nutzerbezogenen KI-Nutzungsdaten.
       </p>
 
       <h2>Externen Löschantrag stellen</h2>
       <p>
-        Senden Sie die Anfrage möglichst von der E-Mail-Adresse, die Sie für
-        Sachkunde 34a Coach verwenden. Geben Sie ausschließlich diese
-        Konto-E-Mail-Adresse und den Wunsch zur vollständigen Kontolöschung an.
-        Zur Verhinderung unbefugter Löschungen kann eine angemessene
+        Senden Sie die Anfrage möglichst von der E-Mail-Adresse, die Sie für Sachkunde 34a Coach
+        verwenden. Geben Sie ausschließlich diese Konto-E-Mail-Adresse und den Wunsch zur
+        vollständigen Kontolöschung an. Zur Verhinderung unbefugter Löschungen kann eine angemessene
         Identitätsbestätigung erforderlich sein.
       </p>
       <p>
@@ -73,33 +69,35 @@
       <ul>
         <li>das Firebase-Authentifizierungskonto;</li>
         <li>der diesem Konto zugeordnete synchronisierte Lernfortschritt;</li>
-        <li>
-          Statistik-, Aktivitäts- und Prüfungssimulations-Zusammenfassungen;
-        </li>
-        <li>
-          nutzerbezogene Kontingent- und Reservierungsdaten für die mündliche
-          KI-Auswertung;
-        </li>
-        <li>
-          das bei RevenueCat mit der technischen Konto-ID verknüpfte
-          Kundenprofil.
-        </li>
+        <li>Statistik-, Aktivitäts- und Prüfungssimulations-Zusammenfassungen;</li>
+        <li>nutzerbezogene Kontingent- und Reservierungsdaten für die mündliche KI-Auswertung;</li>
+        <li>das bei RevenueCat mit der technischen Konto-ID verknüpfte Kundenprofil.</li>
       </ul>
       <p>
-        Lokale App-Daten werden beim In-App-Verfahren entfernt. Nach einer
-        externen Löschung können noch vorhandene lokale Daten durch Löschen der
-        App beziehungsweise ihrer App-Daten entfernt werden. Daten, die
-        ausnahmsweise aufgrund gesetzlicher Pflichten weiter aufbewahrt werden
-        müssen, werden für andere Zwecke gesperrt und nach Ablauf der jeweiligen
-        Frist gelöscht.
+        Lokale App-Daten werden beim In-App-Verfahren entfernt. Nach einer externen Löschung können
+        noch vorhandene lokale Daten durch Löschen der App beziehungsweise ihrer App-Daten entfernt
+        werden. Daten, die ausnahmsweise aufgrund gesetzlicher Pflichten weiter aufbewahrt werden
+        müssen, werden für andere Zwecke gesperrt und nach Ablauf der jeweiligen Frist gelöscht.
+      </p>
+
+      <p>
+        Ein minimaler serverseitiger Löschvermerk bleibt unter account_deletions/{uid} erhalten. Er
+        besteht ausschließlich aus der technischen Konto-ID als Dokumentkennung und dem Zeitstempel
+        startedAt des Löschbeginns. Er enthält keine E-Mail-Adresse, keinen Namen und keine Lern-
+        oder KI-Inhalte. Damit werden Zugriffe mit noch gültigen Anmeldetokens und verzögert
+        fortgesetzte Anfragen blockiert, die sonst Daten des gelöschten Kontos erneut anlegen
+        könnten. Der Vermerk wird 30 Tage nach dem Löschbeginn automatisch entfernt; die Entfernung
+        kann zeitversetzt erfolgen. Die Verarbeitung dient der Absicherung der Kontolöschung auf
+        Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Einzelheiten stehen in der
+        <a href="../datenschutz/">Datenschutzerklärung</a>.
       </p>
 
       <div class="callout">
         <h2>Abonnements separat verwalten</h2>
         <p>
-          Die Kontolöschung beendet kein über Apple oder Google abgerechnetes
-          Abonnement. Kündigen Sie ein solches Abonnement zusätzlich in den
-          Abonnement-Einstellungen des jeweiligen Stores.
+          Die Kontolöschung beendet kein über Apple oder Google abgerechnetes Abonnement. Kündigen
+          Sie ein solches Abonnement zusätzlich in den Abonnement-Einstellungen des jeweiligen
+          Stores.
         </p>
       </div>
     </main>
