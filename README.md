@@ -77,6 +77,20 @@ anschließend der manuelle Workflow-Modus `verify-and-publish-redirects` verwend
 benötigt keine SFTP-Secrets, prüft die neue Website und veröffentlicht die alten Weiterleitungen
 nur bei Erfolg. `deploy` ist der normale SFTP-Modus. Vor Veröffentlichung beide Stände prüfen.
 
+Stand 3. November 2026: Die neun Website-Dateien sind über den HTTPS-Dateimanager veröffentlicht
+und live geprüft. Der Webspace-Stammordner heißt `keelantic`, die Domainzuordnung wurde angepasst.
+Die bestehende Hauptseite, das Impressum und die Root-robots.txt stimmen weiterhin mit den vor
+dem Upload erfassten Antworten überein. Chrome-Prüfungen für alle fünf Seiten bei schmaler Breite
+in Light/Dark sowie Tastaturnavigation und den Impressums-Link waren erfolgreich.
+
+Die manuelle Live-Prüfung in GitHub Actions ist ebenfalls erfolgreich. Die anschließende
+Veröffentlichung der alten Weiterleitungsseiten wurde jedoch von der bestehenden
+`github-pages`-Branchregel abgewiesen: Der PR-Branch darf nicht veröffentlichen. Die Regel wurde
+nicht geändert. Nach dem Merge dieses PRs den Modus `verify-and-publish-redirects` auf `main`
+ausführen und die alten URLs prüfen. Bis dahin bleiben die bisherigen GitHub-Seiten bestehen.
+Automatische STRATO-Uploads sind erst nach Einrichtung des eigenen SFTP-Zugangs und der Secrets
+betriebsbereit; sie wurden noch nicht mit echten Zugangsdaten ausgeführt.
+
 ## robots.txt der Hauptdomain
 
 Die vorhandene Datei **nicht überschreiben**. Die Inhaberin kann darin diese Zeile ergänzen:
