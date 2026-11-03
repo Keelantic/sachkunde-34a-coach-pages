@@ -1,0 +1,7 @@
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /apps/34a-coach/404.html
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://keelantic.com%{REQUEST_URI} [R=301,L,NE]

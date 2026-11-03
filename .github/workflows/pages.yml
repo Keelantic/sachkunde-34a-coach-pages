@@ -1,41 +1,131 @@
-name: Validate and deploy GitHub Pages
+name: Validate and deploy legal pages
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Upload to STRATO, or verify an initial upload before publishing old-page redirects
+        type: choice
+        default: deploy
+        options:
+          - deploy
+          - verify-and-publish-redirects
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: strato-legal-pages
   cancel-in-progress: false
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 22
+          node-version: 22.23.1
       - run: npm test
+      - run: npm run build
+      - run: npm run build:legacy
 
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'deploy')
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: strato-production
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.1
+      - name: Validate SFTP configuration and pin the server identity
+        env:
+          STRATO_SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          STRATO_SFTP_USER: ${{ secrets.STRATO_SFTP_USER }}
+          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
+          STRATO_SFTP_PORT: ${{ secrets.STRATO_SFTP_PORT }}
+          STRATO_SFTP_KNOWN_HOSTS: ${{ secrets.STRATO_SFTP_KNOWN_HOSTS }}
+        run: |
+          node --input-type=module <<'JS'
+          import { mkdir, writeFile } from 'node:fs/promises';
+          for (const suffix of ['HOST', 'USER', 'PASSWORD', 'PORT', 'KNOWN_HOSTS']) {
+            if (!process.env[`STRATO_SFTP_${suffix}`]?.trim()) {
+              throw new Error(`Missing GitHub secret STRATO_SFTP_${suffix}`);
+            }
+          }
+          const host = process.env.STRATO_SFTP_HOST;
+          const user = process.env.STRATO_SFTP_USER;
+          const port = process.env.STRATO_SFTP_PORT;
+          if (!/^[a-zA-Z0-9][a-zA-Z0-9.-]*$/.test(host) || !/^[a-zA-Z0-9._-]+$/.test(user) ||
+              !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) {
+            throw new Error('Invalid SFTP host, user or port format.');
+          }
+          // Public server identity only; the password is never written to a file.
+          const knownHosts = process.env.STRATO_SFTP_KNOWN_HOSTS.trim();
+          const hostPattern = port === '22' ? host : `[${host}]:${port}`;
+          if (!knownHosts.split('\n').some(line => line.startsWith(`${hostPattern} `))) {
+            throw new Error('The verified known_hosts entry must match the configured host and port.');
+          }
+          await mkdir('.deploy', { recursive: true });
+          await writeFile('.deploy/known_hosts', `${knownHosts}\n`, { mode: 0o600 });
+          JS
+      - run: npm run build
+      - run: node scripts/check-live.mjs --record-baseline
+      # The SFTP account must be jailed to /webfix-solutions/apps/.
+      # /34a-coach/ then maps exactly to the public /apps/34a-coach/.
+      - name: Upload only the app website, including its .htaccess
+        uses: wlixcc/SFTP-Deploy-Action@a5ccb9c6211a94cc59404f0fdb2a9936a6dfee64 # v1.2.6
+        with:
+          server: ${{ secrets.STRATO_SFTP_HOST }}
+          username: ${{ secrets.STRATO_SFTP_USER }}
+          password: ${{ secrets.STRATO_SFTP_PASSWORD }}
+          port: ${{ secrets.STRATO_SFTP_PORT }}
+          local_path: ./dist/strato/.
+          remote_path: /34a-coach/
+          sftp_only: true
+          delete_remote_files: false
+          # OpenSSH takes the first value, before the action's later unsafe default.
+          sftpArgs: -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/github/workspace/.deploy/known_hosts
+      - run: node scripts/check-live.mjs --check-baseline
+
+  verify:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'verify-and-publish-redirects'
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          path: .
-      - name: Deploy to GitHub Pages
+          node-version: 22.23.1
+      - run: npm run check:live
+
+  legacy-redirects:
+    if: always() && needs.validate.result == 'success' && (needs.deploy.result == 'success' || needs.verify.result == 'success')
+    needs: [validate, deploy, verify]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.1
+      - run: npm run build:legacy
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist/github-redirects
+      - name: Publish redirects only after the STRATO checks pass
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

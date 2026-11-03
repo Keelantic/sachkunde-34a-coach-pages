@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://keelantic.github.io/sachkunde-34a-coach-pages/sitemap.xml
