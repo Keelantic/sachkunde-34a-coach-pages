@@ -1,43 +1,58 @@
 # Sachkunde 34a Coach – öffentliche Pflichtseiten
 
-Statische, barrierearme Informationsseiten für Datenschutz, Nutzungsbedingungen, Support und den
-externen Kontolöschweg der iOS- und Android-App. Dieses Repository enthält bewusst keinen
-App-Quellcode, keine Firebase-Konfiguration und keine internen Release-Unterlagen.
+Die Website liegt ausschließlich bei STRATO unter
+[keelantic.com/apps/34a-coach/](https://keelantic.com/apps/34a-coach/).
 
-## Veröffentlichung
+## Öffentliche Seiten
 
-GitHub Actions validiert alle Pflichtseiten und veröffentlicht den Stand von `main` über GitHub
-Pages. Die produktive Fallback-URL lautet:
+- Startseite: https://keelantic.com/apps/34a-coach/
+- Datenschutz: https://keelantic.com/apps/34a-coach/datenschutz/
+- Nutzungsbedingungen: https://keelantic.com/apps/34a-coach/nutzungsbedingungen/
+- Support: https://keelantic.com/apps/34a-coach/support/
+- Konto löschen: https://keelantic.com/apps/34a-coach/konto-loeschen/
 
-`https://keelantic.github.io/sachkunde-34a-coach-pages/`
-
-Vor einem Merge muss `npm test` erfolgreich sein. Betreiber- und Kontaktdaten entsprechen dem
-bereits öffentlich zugänglichen Keelantic-Impressum. Inhaltliche und rechtliche Owner-Freigaben
-werden außerhalb dieses technischen Repositories dokumentiert.
-
-## Local review
+## Prüfen
 
 ```sh
 npm test
-npm run serve
+npm run check:live
 ```
 
-Open `http://127.0.0.1:4173/` and verify at narrow width, 200% zoom, Light/Dark mode and keyboard
-navigation.
+Die Validierung prüft Inhalte, deutsche Dokumentstruktur, Canonical-URLs,
+Indexierbarkeit, Links, doppelte IDs, HTTPS-/404-Konfiguration, Sitemap und
+Google-Eigentums-Tag. GitHub Actions führt ausschließlich diese Validierung aus.
+Es gibt keinen automatischen Upload und keine Weiterleitungsseiten.
 
-## Intended stable paths
+## Bei STRATO manuell hochladen
 
-- `/nutzungsbedingungen/`
-- `/datenschutz/`
-- `/support/`
-- `/konto-loeschen/`
+Im HTTPS-Dateimanager ist das Ziel ausschließlich `/keelantic/apps/34a-coach/`.
+Die Domain `keelantic.com` zeigt auf `/keelantic`.
 
-Diese Pfade werden in der App auf folgende Variablen abgebildet:
+Nur diese neun Dateien einschließlich ihrer Unterordner hochladen:
 
-- `EXPO_PUBLIC_TERMS_URL`
-- `EXPO_PUBLIC_PRIVACY_URL`
-- `EXPO_PUBLIC_SUPPORT_URL`
-- `EXPO_PUBLIC_ACCOUNT_DELETION_URL`
+- `index.html`
+- `datenschutz/index.html`
+- `nutzungsbedingungen/index.html`
+- `support/index.html`
+- `konto-loeschen/index.html`
+- `404.html`
+- `.htaccess`
+- `assets/styles.css`
+- `sitemap.xml`
 
-Die Kontolöschseite enthält neben dem In-App-Verfahren einen externen, überwachten Anfrageweg und
-erläutert gelöschte sowie gegebenenfalls aufbewahrte Daten und die getrennte Store-Kündigung.
+Repository-, Skript-, Workflow- und Dokumentationsdateien nicht hochladen.
+Die bestehende Hauptwebsite, ihr Impressum, ihre `.htaccess` und die Root-robots.txt
+dürfen nicht überschrieben oder gelöscht werden. Ein zusätzlicher Dateizugang
+oder GitHub-Zugangsdaten sind für den manuellen Upload nicht erforderlich.
+
+## robots.txt der Hauptdomain
+
+Keine robots.txt in diesem App-Unterordner ablegen. Diese Zeile kann in der
+vorhandenen Root-Datei ergänzt werden:
+
+```text
+Sitemap: https://keelantic.com/apps/34a-coach/sitemap.xml
+```
+
+Der STRATO-AVV besteht seit 9. Juni 2026. Hosting-Anbieter ist STRATO GmbH,
+Serverstandort Deutschland.
