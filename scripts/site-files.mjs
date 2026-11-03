@@ -14,7 +14,6 @@ export const websiteFiles = [
   "sitemap.xml",
   "assets/styles.css",
 ];
-export const redirectFiles = [...pagePaths, "404.html"];
 
 export function pageUrl(path) {
   return new URL(path.replace(/index\.html$/, ""), siteBase).href;

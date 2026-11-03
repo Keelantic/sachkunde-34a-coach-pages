@@ -1,13 +1,7 @@
 import { access, readFile, readdir } from "node:fs/promises";
 import { extname, join, relative } from "node:path";
 
-import {
-  pagePaths,
-  pageUrl,
-  redirectFiles,
-  siteBase,
-  sitePath,
-} from "./site-files.mjs";
+import { pagePaths, pageUrl, siteBase, sitePath } from "./site-files.mjs";
 
 const root = new URL("../", import.meta.url);
 const requiredPaths = pagePaths;
@@ -117,26 +111,10 @@ if (
 ) {
   errors.push("index.html: Google ownership verification tag is missing");
 }
-for (const path of redirectFiles) {
-  const html = await readFile(new URL(`legacy-pages/${path}`, root), "utf8");
-  const compactHtml = html.replace(/\s+/g, " ");
-  const destination = path === "404.html" ? siteBase : pageUrl(path);
-  for (const expected of [
-    '<html lang="de">',
-    'name="robots" content="noindex,follow"',
-    `http-equiv="refresh" content="0;url=${destination}"`,
-    `rel="canonical" href="${destination}"`,
-    `href="${destination}"`,
-  ]) {
-    if (!compactHtml.includes(expected))
-      errors.push(`legacy-pages/${path}: missing ${expected}`);
-  }
-}
-
 for (const file of await walk(new URL(".", root))) {
   if (extname(file) !== ".html") continue;
   const html = await readFile(file, "utf8");
-  if (html.includes("https://keelantic.github.io/")) {
+  if (/https?:\/\/[^/]+\.github\.io(?:\/|")/i.test(html)) {
     errors.push(
       `${relative(root.pathname, file)}: old GitHub website URL remains`,
     );

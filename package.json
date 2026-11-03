@@ -1,12 +1,9 @@
 {
-  "name": "sachkunde-34a-coach-pages",
+  "name": "34a-coach-public-pages",
   "private": true,
   "scripts": {
-    "serve": "node scripts/serve.mjs",
     "test": "node scripts/validate.mjs",
     "check:publish": "node scripts/validate.mjs",
-    "build": "node scripts/build.mjs",
-    "build:legacy": "node scripts/build.mjs --legacy",
     "check:live": "node scripts/check-live.mjs"
   }
 }
