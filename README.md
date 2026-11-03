@@ -28,13 +28,13 @@ veröffentlicht. Es wird **keine robots.txt** ausgeliefert.
 
 ## STRATO-Ziel und eigener Zugang
 
-Die Hauptdomain zeigt im geprüften Hosting-Paket auf `/webfix-solutions`.
+Die Hauptdomain zeigt im geprüften Hosting-Paket auf `/keelantic`.
 Der öffentliche Pfad `/apps/34a-coach/` liegt deshalb im Dateimanager unter
-`/webfix-solutions/apps/34a-coach/`. Die bestehende Website, ihr Impressum, ihre `.htaccess`
+`/keelantic/apps/34a-coach/`. Die bestehende Website, ihr Impressum, ihre `.htaccess`
 und ihre robots.txt dürfen weder ersetzt noch gelöscht werden.
 
 Unter **Datenbanken und Webspace → SFTP & SSH → Neu anlegen** einen eigenen Zugang vom Typ
-**SFTP** erstellen. Als Stammverzeichnis exakt `/webfix-solutions/apps/` auswählen. STRATO
+**SFTP** erstellen. Als Stammverzeichnis exakt `/keelantic/apps/` auswählen. STRATO
 beschränkt diesen Benutzer auf das Verzeichnis und seine Unterordner. Benutzername und Server
 werden im Kundenbereich angezeigt; das Passwort legt ausschließlich die Inhaberin selbst fest.
 Kein Hauptzugang und kein SSH-Terminalzugriff sind nötig. Der Unterordner `34a-coach` muss
@@ -49,7 +49,7 @@ In **GitHub → Settings → Environments → strato-production → Environment 
 | Secret                    | Inhalt                                                                                                                                                                                                                               |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `STRATO_SFTP_HOST`        | Der im STRATO-SFTP-Bereich angezeigte Servername, ohne Protokoll oder Pfad.                                                                                                                                                          |
-| `STRATO_SFTP_USER`        | Der automatisch erzeugte Benutzername des auf `/webfix-solutions/apps/` eingeschränkten Zugangs.                                                                                                                                     |
+| `STRATO_SFTP_USER`        | Der automatisch erzeugte Benutzername des auf `/keelantic/apps/` eingeschränkten Zugangs.                                                                                                                                            |
 | `STRATO_SFTP_PASSWORD`    | Das selbst gesetzte Passwort dieses Benutzers. Nicht im Chat oder in Dateien weitergeben.                                                                                                                                            |
 | `STRATO_SFTP_PORT`        | `22`                                                                                                                                                                                                                                 |
 | `STRATO_SFTP_KNOWN_HOSTS` | Der zum Server gehörende, anhand von STRATOs Angaben überprüfte öffentliche SSH-Hostschlüssel im OpenSSH-known_hosts-Format. Bei Port 22 beginnt die Zeile mit dem Servernamen, gefolgt von Schlüsseltyp und öffentlichem Schlüssel. |

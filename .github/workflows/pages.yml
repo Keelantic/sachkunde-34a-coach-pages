@@ -77,7 +77,7 @@ jobs:
           JS
       - run: npm run build
       - run: node scripts/check-live.mjs --record-baseline
-      # The SFTP account must be jailed to /webfix-solutions/apps/.
+      # The SFTP account must be jailed to /keelantic/apps/.
       # /34a-coach/ then maps exactly to the public /apps/34a-coach/.
       - name: Upload only the app website, including its .htaccess
         uses: wlixcc/SFTP-Deploy-Action@a5ccb9c6211a94cc59404f0fdb2a9936a6dfee64 # v1.2.6
